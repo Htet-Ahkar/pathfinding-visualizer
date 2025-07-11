@@ -35,7 +35,7 @@ export const checkIfStartOrEnd = (row: number, col: number) => {
 };
 
 export const createNewGrid = (grid: GridType, row: number, col: number) => {
-  const newGrid = grid.slice();
+  const newGrid = [...grid]; // create shallow copy
   const newTile = {
     ...newGrid[row][col],
     isWall: !newGrid[row][col].isWall,
