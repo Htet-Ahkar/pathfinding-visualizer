@@ -14,8 +14,8 @@ import { Select } from "./Select";
 import { useSpeed } from "../hooks/useSpeed";
 import { runMazeAlgorithm } from "../utils/runMazeAlgorithm";
 import { PlayButton } from "./PlayButton";
-// import { runPathfindingAlgorithm } from "../utils/runPathfindingAlgorithm";
-// import { animatePath } from "../utils/animatePath";
+import { runPathfindingAlgorithm } from "../utils/runPathfindingAlgorithm";
+import { animatePath } from "../utils/animatePath";
 
 export function Nav({
   isVisualizationRunningRef,
@@ -55,37 +55,37 @@ export function Nav({
     setIsGraphVisualized(false);
   };
 
-  // const handlerRunVisualizer = () => {
-  //   if (isGraphVisualized) {
-  //     setIsGraphVisualized(false);
-  //     resetGrid({ grid: grid.slice(), startTile, endTile });
-  //     return;
-  //   }
+  const handlerRunVisualizer = () => {
+    if (isGraphVisualized) {
+      setIsGraphVisualized(false);
+      resetGrid({ grid: grid.slice(), startTile, endTile });
+      return;
+    }
 
-  //   const { traversedTiles, path } = runPathfindingAlgorithm({
-  //     algorithm,
-  //     grid,
-  //     startTile,
-  //     endTile,
-  //   });
+    const { traversedTiles, path } = runPathfindingAlgorithm({
+      algorithm,
+      grid,
+      startTile,
+      endTile,
+    });
 
-  //   animatePath(traversedTiles, path, startTile, endTile, speed);
-  //   setIsDisabled(true);
-  //   isVisualizationRunningRef.current = true;
-  //   setTimeout(
-  //     () => {
-  //       const newGrid = grid.slice();
-  //       setGrid(newGrid);
-  //       setIsGraphVisualized(true);
-  //       setIsDisabled(false);
-  //       isVisualizationRunningRef.current = false;
-  //     },
-  //     SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) +
-  //       EXTENDED_SLEEP_TIME *
-  //         (path.length + 60) *
-  //         SPEEDS.find((s) => s.value === speed)!.value,
-  //   );
-  // };
+    animatePath(traversedTiles, path, startTile, endTile, speed);
+    setIsDisabled(true);
+    isVisualizationRunningRef.current = true;
+    setTimeout(
+      () => {
+        const newGrid = grid.slice();
+        setGrid(newGrid);
+        setIsGraphVisualized(true);
+        setIsDisabled(false);
+        isVisualizationRunningRef.current = false;
+      },
+      SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) +
+        EXTENDED_SLEEP_TIME *
+          (path.length + 60) *
+          SPEEDS.find((s) => s.value === speed)!.value,
+    );
+  };
 
   return (
     <div className="flex min-h-[4.5rem] items-center justify-center border-b px-0 shadow-gray-600 sm:px-5">
@@ -122,11 +122,11 @@ export function Nav({
               setSpeed(parseInt(e.target.value) as SpeedType);
             }}
           />
-          {/* <PlayButton
+          <PlayButton
             isDisabled={isDisabled}
             isGraphVisualized={isGraphVisualized}
             handlerRunVisualizer={handlerRunVisualizer}
-          /> */}
+          />
         </div>
       </div>
     </div>
