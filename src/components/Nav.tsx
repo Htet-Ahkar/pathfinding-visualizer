@@ -37,13 +37,10 @@ export function Nav({
   const { speed, setSpeed } = useSpeed();
 
   const handleGenerateMaze = (maze: MazeType) => {
-    if (maze === "NONE") {
-      setMaze(maze);
-      resetGrid({ grid, startTile, endTile });
-      return;
-    }
-
     setMaze(maze);
+    resetGrid({ grid, startTile, endTile });
+    if (maze === "NONE") return;
+
     setIsDisabled(true);
     runMazeAlgorithm({
       maze,
@@ -53,7 +50,7 @@ export function Nav({
       setIsDisabled,
       speed,
     });
-    const newGrid = grid.slice();
+    const newGrid = [...grid]; // create shallow copy to invoke re-render via setGrid
     setGrid(newGrid);
     setIsGraphVisualized(false);
   };

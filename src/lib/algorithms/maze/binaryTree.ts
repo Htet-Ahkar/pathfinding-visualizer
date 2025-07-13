@@ -47,5 +47,6 @@ export const binaryTree = async (
       }
     }
   }
+
   setIsDisabled(false); // Re-enable the UI
 };

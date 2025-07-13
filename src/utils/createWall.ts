@@ -19,8 +19,14 @@ export const createWall = (
               !isRowColEqual(row, col, endTile)
             ) {
               setTimeout(() => {
-                document.getElementById(`${row}-${col}`)!.className =
-                  `${WALL_TILE_STYLE} animate-wall`;
+                const tileElement = document.getElementById(`${row}-${col}`);
+                if (tileElement) {
+                  tileElement.className = `${WALL_TILE_STYLE} animate-wall`;
+                  tileElement.classList.add(
+                    ...WALL_TILE_STYLE.split(" "),
+                    "animate-wall",
+                  );
+                }
               }, delay * col);
             }
           }
