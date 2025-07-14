@@ -7,7 +7,6 @@ export const bfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
   const traversedTiles: TileType[] = []; // Initialize an array to store traversed tiles
   const base = grid[startTile.row][startTile.col]; // Get the start tile from the grid
   base.distance = 0; // Set the distance of the start tile to 0
-  base.isTraversed = true; // Mark the start tile as traversed
   const unTraversed = [base]; // Initialize the queue with the start tile
 
   while (unTraversed.length) {
@@ -19,16 +18,15 @@ export const bfs = (grid: GridType, startTile: TileType, endTile: TileType) => {
     traversedTiles.push(tile); // Add the tile to the traversed tiles array
     if (isEqual(tile, endTile)) break; // Break if the tile is the end tile
 
-    const neighbors = getUntraversedNeighbors(grid, tile); // Get untraversed neighbors of the tile
+    const neighbors = getUntraversedNeighbors(grid, tile); // Get untraversed Neighbors of the tile
     for (let i = 0; i < neighbors.length; i += 1) {
       // Iterate through each neighbor
-      if (!isInQueue(neighbors[i], unTraversed)) {
-        // Check if the neighbor is not in the queue
-        const nei = neighbors[i]; // Get the neighbor tile
-        nei.distance = tile.distance + 1; // Update the neighbor's distance
-        nei.parent = tile; // Set the neighbor's parent to the current tile
-        unTraversed.push(nei); // Add the neighbor to the queue
-      }
+      if (isInQueue(neighbors[i], unTraversed)) continue; // Check if the neighbor is not in the queue
+
+      const nei = neighbors[i]; // Get the neighbor tile
+      nei.distance = tile.distance + 1; // Update the neighbor's distance
+      nei.parent = tile; // Set the neighbor's parent to the current tile
+      unTraversed.push(nei); // Add the neighbor to the queue
     }
   }
 
